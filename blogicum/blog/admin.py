@@ -3,7 +3,6 @@ from django.contrib import admin
 from .models import Category, Location, Post
 
 
-# @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'title',
@@ -21,15 +20,15 @@ class CategoryAdmin(admin.ModelAdmin):
         'slug',
         'created_at',
         'is_published',
-        )
+    )
     list_display_links = ('title',)
 
-# @admin.register(Location)
+
 class LocationAdmin(admin.ModelAdmin):
     list_display = (
-    'name',
-    'created_at',
-    'is_published',
+        'name',
+        'created_at',
+        'is_published',
     )
     list_editable = (
         'is_published',
@@ -38,10 +37,10 @@ class LocationAdmin(admin.ModelAdmin):
         'name',
         'created_at',
         'is_published',
-        )
+    )
     list_display_links = ('name',)
 
-# @admin.register(Post)
+
 class PostAdmin(admin.ModelAdmin):
     list_display = (
         'title',
@@ -51,19 +50,16 @@ class PostAdmin(admin.ModelAdmin):
     )
     list_editable = (
         'is_published',
-
     )
     search_fields = ('title',)
     list_filter = (
         'category',
         'is_published',
-)
+    )
     list_display_links = ('title',)
 
-admin.site.register(Post, PostAdmin) 
-admin.site.register(Location, LocationAdmin) 
+
+admin.site.register(Post, PostAdmin)
+admin.site.register(Location, LocationAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.empty_value_display = 'Не задано'
-
-
-

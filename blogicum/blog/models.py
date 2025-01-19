@@ -1,15 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from core.models import PublishedModel, CreatedAtModel, TitleModel
+
+
 User = get_user_model()
 
 
-class Post(models.Model):
-    title = models.CharField(
-        max_length=256,
-        blank=False,
-        verbose_name='Заголовок',
-    )
+class Post(PublishedModel, CreatedAtModel, TitleModel):
     text = models.TextField(
         blank=False,
         verbose_name='Текст',
@@ -40,17 +38,6 @@ class Post(models.Model):
         blank=False,
         verbose_name='Категория',
     )
-    is_published = models.BooleanField(
-        default=True,
-        blank=False,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть публикацию.',
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        verbose_name='Добавлено'
-    )
 
     class Meta:
         verbose_name = 'публикация'
@@ -60,12 +47,7 @@ class Post(models.Model):
         return self.title
 
 
-class Category(models.Model):
-    title = models.CharField(
-        max_length=256,
-        blank=False,
-        verbose_name='Заголовок',
-    )
+class Category(PublishedModel, CreatedAtModel, TitleModel):
     description = models.TextField(
         blank=False,
         verbose_name='Описание',
@@ -77,17 +59,6 @@ class Category(models.Model):
         help_text='Идентификатор страницы для URL; '
         'разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
-    is_published = models.BooleanField(
-        default=True,
-        blank=False,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть публикацию.'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        verbose_name='Добавлено',
-    )
 
     class Meta:
         verbose_name = 'категория'
@@ -97,22 +68,11 @@ class Category(models.Model):
         return self.title
 
 
-class Location(models.Model):
+class Location(PublishedModel, CreatedAtModel):
     name = models.CharField(
         max_length=256,
         blank=False,
         verbose_name='Название места',
-    )
-    is_published = models.BooleanField(
-        default=True,
-        blank=False,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть публикацию.',
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=False,
-        verbose_name='Добавлено',
     )
 
     class Meta:
