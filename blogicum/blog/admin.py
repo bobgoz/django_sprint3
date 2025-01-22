@@ -12,7 +12,6 @@ class CategoryAdmin(admin.ModelAdmin):
     )
     list_editable = (
         'is_published',
-
     )
     search_fields = ('title',)
     list_filter = (

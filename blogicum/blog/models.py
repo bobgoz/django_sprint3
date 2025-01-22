@@ -1,10 +1,37 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
+
 
 from core.models import PublishedModel, CreatedAtModel, TitleModel
 
 
 User = get_user_model()
+
+
+class PostManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'category',
+            'author',
+            'location',
+        ).filter(
+            is_published=True,
+            category__is_published=True,
+            pub_date__lte=now(),
+        )
+
+
+class CategoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(
+            is_published=True,
+            created_at__lte=now(),
+        )
+
+
+class LocationManager(models.Manager):
+    pass
 
 
 class Post(PublishedModel, CreatedAtModel, TitleModel):
@@ -38,6 +65,7 @@ class Post(PublishedModel, CreatedAtModel, TitleModel):
         blank=False,
         verbose_name='Категория',
     )
+    objects = PostManager()
 
     class Meta:
         verbose_name = 'публикация'
@@ -59,6 +87,7 @@ class Category(PublishedModel, CreatedAtModel, TitleModel):
         help_text='Идентификатор страницы для URL; '
         'разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = 'категория'
