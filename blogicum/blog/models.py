@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
 
-
 from core.models import PublishedModel, CreatedAtModel, TitleModel
-
 
 User = get_user_model()
 
@@ -65,7 +63,8 @@ class Post(PublishedModel, CreatedAtModel, TitleModel):
         blank=False,
         verbose_name='Категория',
     )
-    objects = PostManager()
+    objects = models.Manager()
+    posts_objects = PostManager()
 
     class Meta:
         verbose_name = 'публикация'
@@ -87,7 +86,7 @@ class Category(PublishedModel, CreatedAtModel, TitleModel):
         help_text='Идентификатор страницы для URL; '
         'разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
-    objects = CategoryManager()
+    category_objects = CategoryManager()
 
     class Meta:
         verbose_name = 'категория'
