@@ -28,10 +28,6 @@ class CategoryManager(models.Manager):
         )
 
 
-class LocationManager(models.Manager):
-    pass
-
-
 class Post(PublishedModel, CreatedAtModel, TitleModel):
     text = models.TextField(
         blank=False,
@@ -86,6 +82,7 @@ class Category(PublishedModel, CreatedAtModel, TitleModel):
         help_text='Идентификатор страницы для URL; '
         'разрешены символы латиницы, цифры, дефис и подчёркивание.'
     )
+    objects = models.Manager()
     category_objects = CategoryManager()
 
     class Meta:
